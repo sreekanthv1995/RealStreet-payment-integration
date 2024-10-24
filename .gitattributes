@@ -1,0 +1,9 @@
+/mvnw text eol=lf
+*.cmd text eol=crlf
+# Set the default behavior for line endings.
+* text=auto
+
+# Handle line endings for specific files.
+*.cmd text eol=crlf
+*.sh text eol=lf
+
