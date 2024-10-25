@@ -40,3 +40,7 @@ The API endpoints are documented in a Postman collection. You can view and impor
 
 https://documenter.getpostman.com/view/27917429/2sAY4sij8H
 
+# ER Diagram Link
+
+https://drive.google.com/file/d/1B4fiGd1iTVRxu6E18aYV1ypx8yzFP0a2/view?usp=sharing
+
