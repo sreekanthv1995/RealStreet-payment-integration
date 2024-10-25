@@ -2,6 +2,8 @@ package com.realstreet_payment_integration.realstreet.service;
 
 import com.realstreet_payment_integration.realstreet.dto.PaymentRequest;
 import com.realstreet_payment_integration.realstreet.model.NetBanking;
+import com.realstreet_payment_integration.realstreet.model.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -10,6 +12,8 @@ import java.util.Date;
 @Service
 public class NetBankingService {
 
+    @Autowired
+    private UserService userService;
     public NetBanking createNetBankingPayment(PaymentRequest paymentRequest){
         NetBanking netBanking = new NetBanking();
         netBanking.setAmount(paymentRequest.getAmount());
@@ -17,6 +21,8 @@ public class NetBankingService {
         netBanking.setAccountNumber(paymentRequest.getAccountNumber());
         netBanking.setBankName(paymentRequest.getBankName());
         netBanking.setIfscCode(paymentRequest.getIfscCode());
+        UserEntity user = userService.getLoggedInUser();
+        netBanking.setUser(user);
         return netBanking;
     }
 }

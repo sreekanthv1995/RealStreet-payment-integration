@@ -35,6 +35,7 @@ public class SecurityConfig {
                     authorize
                             .requestMatchers("/api/v1/auth/**").permitAll()
                             .requestMatchers("/api/v1/payments/**").hasAuthority(Role.USER.name())
+                            .requestMatchers("/api/v1/admin/**").hasAuthority(Role.ADMIN.name())
                     .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())

@@ -17,6 +17,8 @@ import org.springframework.security.authentication.InternalAuthenticationService
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -55,20 +57,19 @@ public class UserServiceImp implements UserService {
 
     @Override
     public ResponseEntity<String> login(LoginRequest loginRequest) {
-        try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getUsername(), loginRequest.getPassword()));
             return ResponseEntity.status(HttpStatus.OK).body("Login Success");
-        } catch (BadCredentialsException e) {
-            log.error("Bad credentials: ", e);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid User");
-        } catch (InternalAuthenticationServiceException e) {
-            log.error("Internal Authentication Service Exception: ", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Authentication failed");
-        } catch (Exception e) {
-            log.error("Other Authentication Exception: ", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during login");
+    }
+
+    public UserEntity getLoggedInUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails userDetails) {
+            return userRepository.findByUsername(userDetails.getUsername())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        } else {
+            throw new IllegalStateException("No authenticated user found");
         }
     }
 

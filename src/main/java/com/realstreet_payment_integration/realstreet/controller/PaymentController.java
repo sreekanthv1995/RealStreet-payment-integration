@@ -28,8 +28,5 @@ public class PaymentController {
         return ResponseEntity.ok(paymentService.getAllPaymentMethods());
     }
 
-    @GetMapping("/payments")
-    public ResponseEntity<List<Payment>>getAllTransactions(){
-        return ResponseEntity.ok(paymentService.getAllTransactions());
-    }
+
 }

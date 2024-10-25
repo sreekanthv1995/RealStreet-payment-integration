@@ -10,5 +10,6 @@ public interface UserService {
 
     SignupResponse createUser(UserDto userDto);
     ResponseEntity<String> login(LoginRequest loginRequest);
+    public UserEntity getLoggedInUser();
 
 }

@@ -32,4 +32,6 @@ public class UserController {
         log.info(loginRequest.getUsername());
         return ResponseEntity.ok(userService.login(loginRequest));
     }
+
+
 }

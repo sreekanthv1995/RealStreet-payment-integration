@@ -23,4 +23,7 @@ public class Payment {
     private Long id;
     private Double amount;
     private LocalDate transactionDate;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    UserEntity user;
 }
