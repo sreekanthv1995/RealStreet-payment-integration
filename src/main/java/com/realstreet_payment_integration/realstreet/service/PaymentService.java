@@ -4,10 +4,12 @@ import com.realstreet_payment_integration.realstreet.dto.PaymentRequest;
 import com.realstreet_payment_integration.realstreet.dto.PaymentResponse;
 import com.realstreet_payment_integration.realstreet.model.Payment;
 import com.realstreet_payment_integration.realstreet.repository.TransactionRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -44,6 +46,16 @@ public class PaymentService {
 
     public List<Payment>getAllTransactions(){
         return transactionRepository.findAll();
+    }
+
+    public Payment getTransactionById(Long id){
+        Optional<Payment> optionalPayment = transactionRepository.findById(id);
+        if (optionalPayment.isPresent()){
+            return optionalPayment.get();
+        }else {
+            throw new EntityNotFoundException("Not Found");
+        }
+
     }
 
 }
