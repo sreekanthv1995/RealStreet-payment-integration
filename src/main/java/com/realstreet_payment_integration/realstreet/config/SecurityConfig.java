@@ -1,5 +1,6 @@
 package com.realstreet_payment_integration.realstreet.config;
 
+import com.realstreet_payment_integration.realstreet.model.Role;
 import com.realstreet_payment_integration.realstreet.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +32,9 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize->
-                    authorize.requestMatchers("/api/v1/auth/**").permitAll()
+                    authorize
+                            .requestMatchers("/api/v1/auth/**").permitAll()
+                            .requestMatchers("/api/v1/payments/**").hasAuthority(Role.USER.name())
                     .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())

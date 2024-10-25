@@ -1,6 +1,7 @@
 package com.realstreet_payment_integration.realstreet.service;
 
 import com.realstreet_payment_integration.realstreet.dto.LoginRequest;
+import com.realstreet_payment_integration.realstreet.dto.SignupResponse;
 import com.realstreet_payment_integration.realstreet.dto.UserDto;
 import com.realstreet_payment_integration.realstreet.model.Role;
 import com.realstreet_payment_integration.realstreet.model.UserEntity;
@@ -29,11 +30,15 @@ public class UserServiceImp implements UserService {
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public UserEntity createUser(UserDto userDto) {
+    public SignupResponse createUser(UserDto userDto) {
         if (userRepository.findByUsername(userDto.getUsername()).isPresent()) {
             throw new IllegalArgumentException("Username " + userDto.getUsername() + " is already taken.");
         }
-        return getUserEntity(userDto);
+        UserEntity user = getUserEntity(userDto);
+        SignupResponse signupResponse = new SignupResponse();
+        signupResponse.setUsername(user.getUsername());
+        signupResponse.setMessage("User Crated");
+        return signupResponse;
     }
 
     private UserEntity getUserEntity(UserDto userDto) {
