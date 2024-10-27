@@ -1,4 +1,4 @@
-package com.realstreet_payment_integration.realstreet.service;
+package com.realstreet_payment_integration.realstreet.service.user;
 
 
 import com.realstreet_payment_integration.realstreet.repository.UserRepository;

@@ -1,5 +1,6 @@
-package com.realstreet_payment_integration.realstreet.service;
+package com.realstreet_payment_integration.realstreet.service.user;
 
+import com.realstreet_payment_integration.realstreet.dto.AuthenticationResponse;
 import com.realstreet_payment_integration.realstreet.dto.LoginRequest;
 import com.realstreet_payment_integration.realstreet.dto.SignupResponse;
 import com.realstreet_payment_integration.realstreet.dto.UserDto;
@@ -9,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 public interface UserService {
 
     SignupResponse createUser(UserDto userDto);
-    ResponseEntity<String> login(LoginRequest loginRequest);
-    public UserEntity getLoggedInUser();
+    AuthenticationResponse login(LoginRequest loginRequest);
+    UserEntity getLoggedInUser();
 
 }

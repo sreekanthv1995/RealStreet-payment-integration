@@ -1,19 +1,19 @@
-package com.realstreet_payment_integration.realstreet.service;
+package com.realstreet_payment_integration.realstreet.service.user;
 
+import com.realstreet_payment_integration.realstreet.dto.AuthenticationResponse;
 import com.realstreet_payment_integration.realstreet.dto.LoginRequest;
 import com.realstreet_payment_integration.realstreet.dto.SignupResponse;
 import com.realstreet_payment_integration.realstreet.dto.UserDto;
 import com.realstreet_payment_integration.realstreet.model.Role;
 import com.realstreet_payment_integration.realstreet.model.UserEntity;
 import com.realstreet_payment_integration.realstreet.repository.UserRepository;
+import com.realstreet_payment_integration.realstreet.service.jwt.JwtService;
+import com.realstreet_payment_integration.realstreet.service.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +30,7 @@ public class UserServiceImp implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     @Override
     public SignupResponse createUser(UserDto userDto) {
@@ -56,11 +57,14 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public ResponseEntity<String> login(LoginRequest loginRequest) {
+    public AuthenticationResponse login(LoginRequest loginRequest) {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getUsername(), loginRequest.getPassword()));
-            return ResponseEntity.status(HttpStatus.OK).body("Login Success");
+            UserEntity user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
+            String userName = user.getUsername();
+            String token = jwtService.generateToken(user);
+            return new AuthenticationResponse(userName,token);
     }
 
     public UserEntity getLoggedInUser() {

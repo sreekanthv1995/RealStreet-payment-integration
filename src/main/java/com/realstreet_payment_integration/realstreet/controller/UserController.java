@@ -1,10 +1,10 @@
 package com.realstreet_payment_integration.realstreet.controller;
 
+import com.realstreet_payment_integration.realstreet.dto.AuthenticationResponse;
 import com.realstreet_payment_integration.realstreet.dto.LoginRequest;
 import com.realstreet_payment_integration.realstreet.dto.SignupResponse;
 import com.realstreet_payment_integration.realstreet.dto.UserDto;
-import com.realstreet_payment_integration.realstreet.model.UserEntity;
-import com.realstreet_payment_integration.realstreet.service.UserService;
+import com.realstreet_payment_integration.realstreet.service.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseEntity<String>> handleLogin(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<AuthenticationResponse> handleLogin(@RequestBody LoginRequest loginRequest){
         log.info(loginRequest.getUsername());
         return ResponseEntity.ok(userService.login(loginRequest));
     }

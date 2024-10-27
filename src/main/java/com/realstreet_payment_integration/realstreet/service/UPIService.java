@@ -3,6 +3,7 @@ package com.realstreet_payment_integration.realstreet.service;
 import com.realstreet_payment_integration.realstreet.dto.PaymentRequest;
 import com.realstreet_payment_integration.realstreet.model.UPI;
 import com.realstreet_payment_integration.realstreet.model.UserEntity;
+import com.realstreet_payment_integration.realstreet.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
