@@ -23,7 +23,7 @@ This application allows users to sign up, log in, create payments, view all paym
 ## Technologies Used
 - **Spring Boot 3.3.4**: Framework for building Java applications.
 - **Spring Security**: Provides authentication and authorization.
-- **Basic Authentication**: Simple username-password-based authentication.
+- **JWT Authentication**: Token-based secure authentication.
 - **MySQL**: Relational database management system.
 - **JPA/Hibernate**: ORM for managing database interactions.
 - **Maven**: Build and dependency management tool.
